@@ -1,4 +1,5 @@
 /* See LICENSE for license details. */
+// vim: set noexpandtab:
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -277,6 +278,7 @@ typedef struct {
 	int cw; /* char width  */
 	char state; /* focus, redraw, visible */
 	int cursor; /* cursor style */
+	int isdock; /* is a dock window? */
 } XWindow;
 
 typedef struct {
@@ -3674,6 +3676,13 @@ xinit(void)
 	XChangeProperty(xw.dpy, xw.win, xw.netwmpid, XA_CARDINAL, 32,
 			PropModeReplace, (uchar *)&thispid, 1);
 
+	if (xw.isdock) {
+		Atom windowtype = XInternAtom(xw.dpy, "_NET_WM_WINDOW_TYPE", False);
+		Atom dock = XInternAtom(xw.dpy, "_NET_WM_WINDOW_TYPE_DOCK", False);
+		XChangeProperty(xw.dpy, xw.win, windowtype, XA_ATOM, 32, PropModeReplace,
+				(unsigned char*)&dock, 1);
+	}
+
 	xresettitle();
 	XMapWindow(xw.dpy, xw.win);
 	xhints();
@@ -4481,6 +4490,9 @@ main(int argc, char *argv[])
 		break;
 	case 'c':
 		opt_class = EARGF(usage());
+		break;
+	case 'd':
+		xw.isdock = 1;
 		break;
 	case 'e':
 		if (argc > 0)
