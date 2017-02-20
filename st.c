@@ -542,6 +542,7 @@ static char *opt_embed = NULL;
 static char *opt_font  = NULL;
 static char *opt_io    = NULL;
 static char *opt_line  = NULL;
+static unsigned int opt_mouseshape = XC_xterm;
 static char *opt_name  = NULL;
 static char *opt_title = NULL;
 static int oldbutton   = 3; /* button event on startup: 3 = release */
@@ -3650,7 +3651,7 @@ xinit(void)
 		die("XCreateIC failed. Could not obtain input method.\n");
 
 	/* white cursor, black outline */
-	cursor = XCreateFontCursor(xw.dpy, mouseshape);
+	cursor = XCreateFontCursor(xw.dpy, opt_mouseshape);
 	XDefineCursor(xw.dpy, xw.win, cursor);
 
 	if (XParseColor(xw.dpy, xw.cmap, colorname[mousefg], &xmousefg) == 0) {
@@ -4513,6 +4514,9 @@ main(int argc, char *argv[])
 		break;
 	case 'l':
 		opt_line = EARGF(usage());
+		break;
+	case 'm':
+		opt_mouseshape = atoi(EARGF(usage()));
 		break;
 	case 'n':
 		opt_name = EARGF(usage());
