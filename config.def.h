@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "DejaVuSansMonoForPowerline Nerd Font:pixelsize=11:rgba=rgb";
+static char font[] = "DejaVuSansMono Nerd Font:pixelsize=11:rgba=rgb";
 static int borderpx = 2;
 
 /*
