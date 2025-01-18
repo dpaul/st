@@ -4,7 +4,8 @@ VERSION = 0.8.5
 # Customize below to fit your system
 
 # paths
-PREFIX = /usr/local
+DESTDIR = /home/davepaul/
+PREFIX = .local
 MANPREFIX = $(PREFIX)/share/man
 ICONPREFIX = $(PREFIX)/share/pixmaps
 ICONNAME = st.png
